@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: rgb(216, 229, 235);
+        }
+        .counter{
+            background-color: rgb(245, 239, 233);
+            width: 500px;
+            margin-left: 30%;
+            height: 280px;
+            margin-top: 20%;
+            border-radius: 10px;
+            box-shadow: 2px green;
+        }
+        #timerDisplay{
+            width: 250px;
+            height: 60px; 
+            margin-left: 130px;
+            color: orangered;
+            font-size: 70px;
+            margin-bottom: 0;
+            margin-top: 0;
+
+        }
+        .buttons{
+            margin-left: 40px;
+            margin-top: 30px;
+        }
+        h1{
+            padding-top: 30px;
+            text-align: center;
+            font-family: cursive;
+        }
+        #startButton{
+            width: 60px;
+            height: 27px;
+            background-color: grey;
+            border-style: none;
+            border-radius: 3px;
+            cursor: pointer;
+            color: white;
+        }
+        #pauseButton{
+            width: 60px;
+            height: 27px;
+            border-style: none;
+            background-color: pink;
+            border-radius: 3px;
+            cursor: pointer;
+            color: white;
+        }
+        #restartButton{
+            width: 60px;
+            height: 27px;
+            background-color: orangered;
+            border-style: none;
+            border-radius: 3px;
+            cursor: pointer;
+            color: white;
+        }
+       #timeinput{
+            width: 200px;
+            height: 36px; 
+            border: 2px solid orange;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="counter">
+        <h1>countdown Timer</h1>
+        <p id="timerDisplay">
+            00:00:00
+        </p>
+        <div class="buttons">
+            <input type="text" id="timeInput" placeholder="HH:MM:SS">
+            <button id="startButton">Start</button>
+            <button id="pauseButton">Pause</button>
+            <button id="restartButton">Restart</button>
+
+        </div>
+    </div>
+    <script>
+    // Initialize variables
+    let timeLeft = 0;
+    let timerInterval = null;
+
+    // Get references to HTML elements
+    const timeInput = document.getElementById('timeInput');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const startButton = document.getElementById('startButton');
+    const pauseButton = document.getElementById('pauseButton');
+    const restartButton = document.getElementById('restartButton');
+
+    // Function to format seconds into HH:MM:SS
+    function formatTime(seconds) {
+        const h = Math.floor(seconds / 3600);
+        const m = Math.floor((seconds % 3600) / 60);
+        const s = seconds % 60;
+        return ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')};
+    }
+
+    // Function to update the timer display
+    function updateDisplay() {
+        timerDisplay.textContent = formatTime(timeLeft);
+    }
+
+    // Function to handle the countdown
+    function countdown() {
+        if (timeLeft > 0) {
+            timeLeft--;
+            updateDisplay();
+        } else {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            alert("Time's up!");
+        }
+    }
+
+    // Function to start the timer
+    function startTimer() {
+        if (timerInterval) return; // Prevent multiple intervals
+
+        // Get and validate input time
+        const timeParts = timeInput.value.split(':');
+        if (timeParts.length !== 3) {
+            alert('Please enter time in format HH:MM:SS');
+            return;
+        }
+
+        const h = parseInt(timeParts[0], 10);
+        const m = parseInt(timeParts[1], 10);
+        const s = parseInt(timeParts[2], 10);
+        if (isNaN(h) || isNaN(m) || isNaN(s)) {
+            alert('Invalid time format');
+            return;
+        }
+
+        // Set timeLeft in seconds
+        timeLeft = h * 3600 + m * 60 + s;
+        updateDisplay();
+        timerInterval = setInterval(countdown, 1000);
+    }
+
+    // Function to pause the timer
+    function pauseTimer() {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+
+    // Function to restart the timer
+    function restartTimer() {
+        pauseTimer();
+        timeLeft = 0;
+        updateDisplay();
+    }
+
+    // Attach event listeners to buttons
+    startButton.addEventListener('click', startTimer);
+    pauseButton.addEventListener('click', pauseTimer);
+    restartButton.addEventListener('click', restartTimer);
+
+</script>
+
+</body>
+</html>
+
+
+
