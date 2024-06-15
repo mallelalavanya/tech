@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+button{
+    border-radius:20px;
+    width:45px;
+    height:40px;
+    background-color:white;
+    color:black;
+    border:2px solid white;
+}
+.outer
+{
+    background-color: dimgrey;
+    border:2px solid yellow;
+    border-radius:10px;
+    width:300px;
+    height:400px;
+   margin-left:40%;
+   margin-top:10%;
+
+
+
+   background-color:dimgrey;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+   
+
+
+   
+}
+table{
+    margin-left:10px;
+    
+}
+
+
+.up
+{
+    height:40px;
+    border-radius:10px;
+    width:240px;
+    border:2px solid white;
+}
+.first button
+{
+   background-color: yellow;
+}
+.last
+{
+    background-color: yellow;
+}
+
+input{
+    font-size:x-large;
+    text-align: right;
+}
+
+
+
+@media screen and (max-width: 680px) {
+  .outer{
+    width: 280px;
+    height: 400px;
+    background-color:dimgrey;
+    margin: auto;
+    
+
+  }
+
+
+.up{
+    width: 200px;
+    margin-left: 10px;
+    
+}
+button{
+    border-radius: 20px;
+    width: 40px;
+    height:40px;
+}
+    
+
+
+}
+
+    </style>
+</head>
+<body>
+    <div>
+    <div class="outer">
+    <table cellpadding="10px">
+         <tr>
+            <td colspan="4" ><input type="text" class="up" ></td>
+         </tr>
+        <tr class="first">
+        <td><button class="button" class="button">C</button></td>
+        <td><button class="button1">Del</button></td>
+        <td><button class="button2">%</button></td>
+        <td><button class="button3">+</button></td>
+        </tr>
+
+        <tr>
+            <td><button class="button4">7</button></td>
+            <td><button class="button5">8</button></td>
+            <td><button class="button6">9</button></td>
+            <td><button class="button7 last">*</button></td>
+      </tr>
+    
+         <tr>
+                
+            <td><button class="button8">4</button></td>
+            <td><button class="button9">5</button></td>
+            <td><button class="button10">6</button></td>
+            <td><button class="button11 last">-</button></td>
+                
+        </tr>
+        
+        
+        <tr>
+            <td><button class="button12">1</button></td>
+            <td><button class="button13">2</button></td>
+            <td><button class="button14">3</button></td>
+            <td><button class="button15 last">/</button></td>
+            </tr>
+    
+            <tr>
+                <td><button class="button16">00</button></td>
+                <td><button class="button17">0</button></td>
+                <td><button class="button18">.</button></td>
+                <td><button type="button" class="enter last"> = </button></td>
+                </tr>
+        
+    
+    </table>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script>
+        
+        $(document).ready(function() {
+            $(".button").on("click", function() {
+                $(".up").val("");
+            });
+        });
+
+      
+            $(".button1").on("click", function() {
+                let currentValue = $(".up").val();
+                $(".up").val(currentValue.slice(0, -1));
+            });
+
+            function appendToInput(value) {
+                let currentValue = $(".up").val();
+                $(".up").val(currentValue + value);
+            }
+
+
+
+
+        
+            $(".button2").on("click", function() {
+                appendToInput('%');
+            });
+
+            $(".button3").on("click", function() {
+                appendToInput('+');
+            });
+
+            $(".button4").on("click", function() {
+                appendToInput('7');
+            });
+
+            $(".button5").on("click", function() {
+                appendToInput('8');
+            });
+
+            $(".button6").on("click", function() {
+                appendToInput('9');
+            });
+            $(".button7").on("click", function() {
+                appendToInput('*');
+            });
+
+            $(".button8").on("click", function() {
+                appendToInput('4');
+            });
+
+            $(".button9").on("click", function() {
+                appendToInput('5');
+            });
+
+            $(".button10").on("click", function() {
+                appendToInput('6');
+            });
+
+            $(".button11").on("click", function() {
+                appendToInput('-');
+            });
+
+            $(".button12").on("click", function() {
+                appendToInput('1');
+            });
+
+            $(".button13").on("click", function() {
+                appendToInput('2');
+            });
+
+            $(".button14").on("click", function() {
+                appendToInput('3');
+            });
+
+            $(".button15").on("click", function() {
+                appendToInput('/');
+            });
+            $(".button16").on("click", function() {
+                appendToInput('00');
+            });
+            $(".button17").on("click", function() {
+            appendToInput('0');
+            });
+
+            $(".button18").on("click", function() {
+            appendToInput('.');
+            });
+
+
+
+           
+            $(".enter").on("click", function() {
+                let expression = $(".up").val();
+                try {
+                    // Evaluate the expression
+                    let result = eval(`(${expression})`);
+
+                    $(".up").val(result).addClass("size");
+                } catch (error) {
+                    // Display "Error" if the expression is invalid
+                    $(".up").val("Error");
+                }
+            });
+    
+
+
+
+    </script>
+
+</body>
+</html>
