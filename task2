@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter - Convert your currency </title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        </style>
+
+       
+</head>
+        
+<body>
+   
+    <div class="container">
+        <div class="second">
+        <h1>currency converter</h1>
+        <form action="/action.php" method="get">
+
+            <label for="quantity">Enter amount: </label><br><br>
+
+            <input type="text" name="quantity" min="1" max="10" class="input">
+
+            <br><br>
+            <label for="currency">Choose a currency: </label><br><br>
+            <select name="currency" class="select">
+                <option value="INR">Indian Rupee</option>
+                <option value="USD">US Dollar</option>
+                <option value="EUR">Euro</option>
+            </select>
+            &nbsp;&nbsp;&nbsp;
+            <button class="btn" type="submit">Submit</button>
+
+        </form>
+        <div class="output">
+            <h3 style="color:white;"> converted the value in different currencies</h3>
+            <br>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Currency</th>
+                        <th>Code</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    <script>
+
+
+
+const populate = async (value, currency) => {
+    let myStr = ""
+    url = "https://api.currencyapi.com/v3/latest?apikey=cur_live_7UStkUqQNBmahSoy8K635tE3Sjr5fK1UVPmVloZ2&base_currency=" + currency
+    let response = await fetch(url)
+    let rJson = await response.json()
+    document.querySelector(".output").style.display = "block"
+let count=0;
+    for (let key of Object.keys(rJson["data"])) {
+        if (count >= 10) break; // Stop after 10 ite
+        myStr += ` <tr>
+                        <td>${key}</td>
+                        <td>${rJson["data"][key]["code"]}</td>
+                        <td>${Math.round(rJson["data"][key]["value"] * value)}</td>
+                    </tr> 
+                `
+                count++;
+    }
+    const tableBody = document.querySelector("tbody");
+    tableBody.innerHTML = myStr;
+
+}
+const btn = document.querySelector(".btn")
+btn.addEventListener("click", (e) => {
+    e.preventDefault()
+    const value = parseInt(document.querySelector("input[name='quantity']").value);
+    const currency = document.querySelector("select[name='currency']").value
+    populate(value, currency)
+})
+
+
+
+
+    </script>
+</body>
+
+</html>
